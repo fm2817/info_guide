@@ -5,7 +5,9 @@
 ---
 
  * [Basic Programmes for Installation](#basic-programmes-for-installation)
-   * [Additional Packages ](#additional-packages)
+   * [Additional Packages](#additional-packages)
+ * [Overview of Analysis Process](#overview-of-analysis-process)
+ * [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)
       
 
 ## Basic Programmes for Installation
@@ -44,20 +46,40 @@ correctly and Mac doesn't come with these pre-installed.
 * Command line tools and developer tools:
     1.  Install Xcode [use App Store, you will also need to make a free account]
     2. To install the command line tools: go into Terminal app and use:
+           
             ```{r}
             xcode-select --install
             ```
+
         This will install the command line tools. Additional info can be found under: https://docs.brew.sh/Installation
     3.  In terminal, use the command:
+            
             ```{r}
             R
             options(menu.graphics=F)
             install.packages("processx")
             ```
+
         After you hit enter for `install.packages("processx")`, you will see a list of mirrors come up. These basically help download your packages from a closer server. Use the UK - Bristol server [try Bristol first and if it doesn't work then use the UK - London server]. 
         You need this package to install the development tools. Additional info can be found under: https://github.com/r-lib/processx 
     4. In terminal, use the command:
+           
             ```{r}
             install.packages("devtools")
             ```
+
+        This will install the developer tools. Additional info can be found under: https://www.r-project.org/nosvn/pandoc/devtools.html 
+
+    5. Once you have done this, you will need to restart RStudio, R, and the terminal too. 
+
+
+## Overview of Analysis Process
+
+1. Acquire raw data - either in the form of fastq or fasta files. 
+    * You can use the SRA run selector to download raw data from GEO [see [inline link](https://github.com/fm2817/get_SRR "get_SRR"). Or you will need to demultiplex your reads using the `bcl2fastq` packages on RStudio. 
+2. Align your sequences to a reference sequence. We use Salmon to do this [see: [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)]. 
+
+## Using Anaconda to Run Salmon 
+
+
         
