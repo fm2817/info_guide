@@ -19,17 +19,13 @@ Some steps also involve Python, but in the terminal and is simple to follow.
 Some basic programmes need to be installed (see below) and you will also need 
 an account with Imperail HPC and connect to the cluster (more about this later).
 
-* Install the latest version of R [R 3.6.2]
-    * https://cran.r-project.org/bin/macosx/
-* Install RStudio [chooose the free desktop version]
-    * https://rstudio.com/products/rstudio/download/
-* Install Visual Studio Code
+* Install the [latest](https://cran.r-project.org/bin/macosx/ "R") version of R [R 3.6.2]
+* Install [RStudio](https://rstudio.com/products/rstudio/download/ "RStudio") [chooose the free desktop version]
+* Install [Visual Studio Code](https://code.visualstudio.com "VSC")
     * This is a great addition to RStudio and while I prefer to use RStudio if 
     I am purely coding in R, VSCode enables cross-langauge compatibility and
     Git commands built-in 
-    * https://code.visualstudio.com
-* Set up a Git Hub account [again choose the free option]
-    * https://github.com
+* Set up a [Git Hub](https://github.com "Git") account [again choose the free option]
 * Docker is another nice application to use, however not necessary (???) 
 
 
@@ -38,13 +34,10 @@ an account with Imperail HPC and connect to the cluster (more about this later).
 You will also need to install some additional packages in order to run R and RStudio 
 correctly and Mac doesn't come with these pre-installed. 
 
-* XQuartz [latest version] 
-    * https://www.xquartz.org 
+* [XQuartz](https://www.xquartz.org "XQuartz") [latest version] 
     > Note: always re-install XQuartz when upgrading to a new major version
-* Clang 7.0.0.  
-    * https://cran.r-project.org/bin/macosx/tools/ 
-* GNU Fortran 6.1
-    * https://cran.r-project.org/bin/macosx/tools/ 
+* [Clang 7.0.0.](https://cran.r-project.org/bin/macosx/tools/ "clang")
+* [GNU Fortran 6.1](https://cran.r-project.org/bin/macosx/tools/ "GNU")
     > Note: you don't need Tcl/Tk as R already comes with it. 
 * Command line tools and developer tools:
     1.  Install Xcode [use App Store, you will also need to make a free account]
@@ -54,7 +47,7 @@ correctly and Mac doesn't come with these pre-installed.
             xcode-select --install
             ```
 
-        This will install the command line tools. Additional info can be found under: https://docs.brew.sh/Installation
+        This will install the command line tools. Additional info can be found [here](https://docs.brew.sh/Installation "clt")
     3.  In terminal, use the command:
             
             ```{r}
@@ -64,14 +57,14 @@ correctly and Mac doesn't come with these pre-installed.
             ```
 
         After you hit enter for `install.packages("processx")`, you will see a list of mirrors come up. These basically help download your packages from a closer server. Use the UK - Bristol server [try Bristol first and if it doesn't work then use the UK - London server]. 
-        You need this package to install the development tools. Additional info can be found under: https://github.com/r-lib/processx 
+        You need this package to install the development tools. Additional info can be found [here](https://github.com/r-lib/processx "processx"). 
     4. In terminal, use the command:
            
             ```{r}
             install.packages("devtools")
             ```
 
-        This will install the developer tools. Additional info can be found under: https://www.r-project.org/nosvn/pandoc/devtools.html 
+        This will install the developer tools. Additional info can be found [here](https://www.r-project.org/nosvn/pandoc/devtools.html "devtools"). 
 
     5. Once you have done this, you will need to restart RStudio, R, and the terminal too. 
 
@@ -87,15 +80,11 @@ https://combine-lab.github.io/salmon/getting_started/
 https://github.com/COMBINE-lab/salmon
 
 3. Carry out analysis using DESeq2, edgeR or another appropriate analysis method. 
-    * DESeq2: 
-        https://bioc.ism.ac.jp/packages/2.14/bioc/vignettes/DESeq2/inst/doc/beginner.pdf
-        http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
-        https://bioconductor.org/packages/release/bioc/html/DESeq2.html
-    * edgeR:
-        http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/
-        https://bioconductor.org/packages/release/bioc/html/edgeR.html
+    * DESeq2: [beginner's guide](https://bioc.ism.ac.jp/packages/2.14/bioc/vignettes/DESeq2/inst/doc/beginner.pdf "beginner"), [vignettes](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html "DESeq2 Vignettes"), and [DESeq2 package](https://bioconductor.org/packages/release/bioc/html/DESeq2.html "DESeq2 package").
+    * edgeR: [vignettes](http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/ "edgeR Vignettes"), and [edgeR package](https://bioconductor.org/packages/release/bioc/html/edgeR.html "edgeR package").
+        
 
-> Note: I recommend using DESeq2. Also [here](https://www.biostars.org/p/284775/ "DESeq2vsEdgeR") is a really nice explination of the differences.
+> Note: I recommend using DESeq2. Also [here](https://www.biostars.org/p/284775/ "DESeq2vsEdgeR") is a really nice explanation of the differences.
 
 
 ## Using Anaconda to Run Salmon 
