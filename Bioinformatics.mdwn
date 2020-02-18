@@ -2,7 +2,11 @@
 
 > Mac Version 1.0 // Update: 18/02/20
 
-Insert links here!
+---
+
+ * [Basic Programmes for Installation](#basic-programmes-for-installation)
+   * [Additional Packages ](#additional-packages)
+      
 
 ## Basic Programmes for Installation
 
@@ -24,4 +28,36 @@ an account with Imperail HPC and connect to the cluster (more about this later).
     * https://github.com
 * Docker is another nice application to use, however not necessary (???) 
 
+### Additional Packages
 
+You will also need to install some additional packages in order to run R and RStudio 
+correctly and Mac doesn't come with these pre-installed. 
+
+* XQuartz [latest version] 
+    * https://www.xquartz.org 
+    * > Note: always re-install XQuartz when upgrading to a new major version
+* Clang 7.0.0.  
+    * https://cran.r-project.org/bin/macosx/tools/ 
+* GNU Fortran 6.1
+    * https://cran.r-project.org/bin/macosx/tools/ 
+    * > Note: you don't need Tcl/Tk as R already comes with it. 
+* Command line tools and developer tools:
+    1.  Install Xcode [use App Store, you will also need to make a free account]
+    2. To install the command line tools: go into Terminal app and use:
+            ```{r}
+            xcode-select --install
+            ```
+        This will install the command line tools. Additional info can be found under: https://docs.brew.sh/Installation
+    3.  In terminal, use the command:
+            ```{r}
+            R
+            options(menu.graphics=F)
+            install.packages("processx")
+            ```
+        After you hit enter for `install.packages("processx")`, you will see a list of mirrors come up. These basically help download your packages from a closer server. Use the UK - Bristol server [try Bristol first and if it doesn't work then use the UK - London server]. 
+        You need this package to install the development tools. Additional info can be found under: https://github.com/r-lib/processx 
+    4. In terminal, use the command:
+            ```{r}
+            install.packages("devtools")
+            ```
+        
