@@ -1,0 +1,27 @@
+# Bioinformatics 
+
+> Mac Version 1.0 // Update: 18/02/20
+
+Insert links here!
+
+## Basic Programmes for Installation
+
+Most of our anaylsis will be done using R or Command Line language. 
+Some steps also involve Python, but in the terminal and is simple to follow. 
+Some basic programmes need to be installed (see below) and you will also need 
+an account with Imperail HPC and connect to the cluster (more about this later).
+
+* Install the latest version of R [R 3.6.2]
+    * https://cran.r-project.org/bin/macosx/
+* Install RStudio [chooose the free desktop version]
+    * https://rstudio.com/products/rstudio/download/
+* Install Visual Studio Code
+    * This is a great addition to RStudio and while I prefer to use RStudio if 
+    I am purely coding in R, VSCode enables cross-langauge compatibility and
+    Git commands built-in 
+    * https://code.visualstudio.com
+* Set up a Git Hub account [again choose the free option]
+    * https://github.com
+* Docker is another nice application to use, however not necessary (???) 
+
+
