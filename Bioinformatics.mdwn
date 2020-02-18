@@ -2,6 +2,8 @@
 
 > Mac Version 1.0 // Update: 18/02/20
 
+This will provide a basic overview of setting up your computer for bioinformatic analysis of RNAseq data. 
+
 ---
 
  * [Basic Programmes for Installation](#basic-programmes-for-installation)
@@ -30,6 +32,7 @@ an account with Imperail HPC and connect to the cluster (more about this later).
     * https://github.com
 * Docker is another nice application to use, however not necessary (???) 
 
+
 ### Additional Packages
 
 You will also need to install some additional packages in order to run R and RStudio 
@@ -37,12 +40,12 @@ correctly and Mac doesn't come with these pre-installed.
 
 * XQuartz [latest version] 
     * https://www.xquartz.org 
-    * > Note: always re-install XQuartz when upgrading to a new major version
+    > Note: always re-install XQuartz when upgrading to a new major version
 * Clang 7.0.0.  
     * https://cran.r-project.org/bin/macosx/tools/ 
 * GNU Fortran 6.1
     * https://cran.r-project.org/bin/macosx/tools/ 
-    * > Note: you don't need Tcl/Tk as R already comes with it. 
+    > Note: you don't need Tcl/Tk as R already comes with it. 
 * Command line tools and developer tools:
     1.  Install Xcode [use App Store, you will also need to make a free account]
     2. To install the command line tools: go into Terminal app and use:
@@ -76,10 +79,50 @@ correctly and Mac doesn't come with these pre-installed.
 ## Overview of Analysis Process
 
 1. Acquire raw data - either in the form of fastq or fasta files. 
-    * You can use the SRA run selector to download raw data from GEO [see [inline link](https://github.com/fm2817/get_SRR "get_SRR"). Or you will need to demultiplex your reads using the `bcl2fastq` packages on RStudio. 
-2. Align your sequences to a reference sequence. We use Salmon to do this [see: [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)]. 
+    * You can use the SRA run selector to download raw data from GEO [see [get_SRR](https://github.com/fm2817/get_SRR "get_SRR"). Or you will need to demultiplex your reads using the `bcl2fastq` packages on RStudio. 
+
+2. Align your sequences to a reference sequence and map to genes. We use Salmon to do this. Salmon is able to produce a highly-accurate, transcript-level quantification estmiates from RNA-seq data. [see: [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)]. 
+Additional details: 
+https://combine-lab.github.io/salmon/getting_started/ 
+https://github.com/COMBINE-lab/salmon
+
+3. Carry out analysis using DESeq2, edgeR or another appropriate analysis method. 
+    * DESeq2: 
+        https://bioc.ism.ac.jp/packages/2.14/bioc/vignettes/DESeq2/inst/doc/beginner.pdf
+        http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+        https://bioconductor.org/packages/release/bioc/html/DESeq2.html
+    * edgeR:
+        http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/
+        https://bioconductor.org/packages/release/bioc/html/edgeR.html
+
+> Note: I recommend using DESeq2. Also [here](https://www.biostars.org/p/284775/ "DESeq2vsEdgeR") is a really nice explination of the differences.
+
 
 ## Using Anaconda to Run Salmon 
 
+Salmon is a fast program to produce highly-accurate, transcript-level quantification estimates from RNA-seq data. In order to run Salmon, since it is a Linux/Unix based system you will need `Anaconda` in order to install it. This [link](https://combine-lab.github.io/salmon/getting_started/ "Anaconda") is a great beginners guide to installing and using Salmon. 
 
-        
+You will need to install `Anaconda`: https://www.anaconda.com/distribution/. Click the Download link on the bottom left to install Python 3.7 version. Follow the instructions on the installer. You can use Anaconda both in Terminal and in the Anaconda-Navigator desktop app. Once you've downloaded Anaconda, head to [here](https://combine-lab.github.io/salmon/getting_started/ "install Salmon") to install Salmon using; 
+
+```{r}
+conda config --add channels conda-forge
+conda config --add channels bioconda
+conda create -n salmon salmon
+```
+
+This will create a new environment in Anaconda where your salmon package is installed. 
+To activate your conda environment:
+
+```{r}
+conda activate salmon
+```
+
+Then use to check that salmon is running on your system correctly. 
+
+```{r}
+salmon -h
+```
+
+Useful links:
+https://github.com/COMBINE-lab/salmon
+https://salmon.readthedocs.io/en/latest/
