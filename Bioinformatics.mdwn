@@ -1,16 +1,19 @@
 # Bioinformatics 
 
-> Mac Version 1.0 // Update: 18/02/20
+> Mac Version 1.0  //  Update: 18/02/20
+
 
 This will provide a basic overview of setting up your computer for bioinformatic analysis of RNAseq data. 
 
 ---
 
+
  * [Basic Programmes for Installation](#basic-programmes-for-installation)
    * [Additional Packages](#additional-packages)
  * [Overview of Analysis Process](#overview-of-analysis-process)
  * [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)
-      
+
+
 
 ## Basic Programmes for Installation
 
@@ -26,7 +29,8 @@ an account with Imperail HPC and connect to the cluster (more about this later).
     I am purely coding in R, VSCode enables cross-langauge compatibility and
     Git commands built-in 
 * Set up a [Git Hub](https://github.com "Git") account [again choose the free option]
-* Docker is another nice application to use, however not necessary (???) 
+* Docker is another nice application 
+
 
 
 ### Additional Packages
@@ -39,30 +43,30 @@ correctly and Mac doesn't come with these pre-installed.
 * [Clang 7.0.0.](https://cran.r-project.org/bin/macosx/tools/ "clang")
 * [GNU Fortran 6.1](https://cran.r-project.org/bin/macosx/tools/ "GNU")
     > Note: you don't need Tcl/Tk as R already comes with it. 
-* Command line tools and developer tools:
-    1.  Install Xcode [use App Store, you will also need to make a free account]
-    2. To install the command line tools: go into Terminal app and use:
+* Command Line Tools and Developer Tools:
+    1. Install XCode [use App Store, you will also need to make a free account]
+    2. To install the command line tools, go into Terminal app and use:
            
-            ```{r}
-            xcode-select --install
-            ```
+        ```{r}
+        xcode-select --install
+        ```
 
         This will install the command line tools. Additional info can be found [here](https://docs.brew.sh/Installation "clt")
     3.  In terminal, use the command:
             
-            ```{r}
-            R
-            options(menu.graphics=F)
-            install.packages("processx")
-            ```
+        ```{r}
+        R
+        options(menu.graphics=F)
+        install.packages("processx")
+        ```
 
         After you hit enter for `install.packages("processx")`, you will see a list of mirrors come up. These basically help download your packages from a closer server. Use the UK - Bristol server [try Bristol first and if it doesn't work then use the UK - London server]. 
         You need this package to install the development tools. Additional info can be found [here](https://github.com/r-lib/processx "processx"). 
     4. In terminal, use the command:
            
-            ```{r}
-            install.packages("devtools")
-            ```
+        ```{r}
+        install.packages("devtools")
+        ```
 
         This will install the developer tools. Additional info can be found [here](https://www.r-project.org/nosvn/pandoc/devtools.html "devtools"). 
 
