@@ -97,7 +97,7 @@ correctly and Mac doesn't come with these pre-installed.
 
 Salmon is a fast program to produce highly-accurate, transcript-level quantification estimates from RNA-seq data. In order to run Salmon, since it is a Linux/Unix based system you will need `Anaconda` in order to install it. This [link](https://combine-lab.github.io/salmon/getting_started/ "Anaconda") is a great beginners guide to installing and using Salmon. 
 
-You will need to install `Anaconda`: https://www.anaconda.com/distribution/. Click the Download link on the bottom left to install Python 3.7 version. Follow the instructions on the installer. You can use Anaconda both in Terminal and in the Anaconda-Navigator desktop app. Once you've downloaded Anaconda, head to [here](https://combine-lab.github.io/salmon/getting_started/ "install Salmon") to install Salmon using; 
+You will need to install `Anaconda`: https://www.anaconda.com/distribution/. Click the Download link on the bottom left to install Python 3.7 version. Follow the instructions on the installer. You can use Anaconda both in Terminal and in the Anaconda-Navigator desktop app. Once you've downloaded Anaconda, head [here](https://anaconda.org/bioconda/salmon) to download and install Salmon (you can use either of the links and put the command into Terminal). After you have installed Salmon, head [here](https://combine-lab.github.io/salmon/getting_started/ "install Salmon") to set up your conda environment for Salmon; 
 
 ```{r}
 conda config --add channels conda-forge
@@ -119,20 +119,23 @@ salmon -h
 ```
 
 Useful links:
-https://github.com/COMBINE-lab/salmon
+Combine lab salmon [GitHub](https://github.com/COMBINE-lab/salmon)
+[Documentation](https://salmon.readthedocs.io/en/latest/)
+Imperial's [Wiki](https://wiki.imperial.ac.uk/display/HPC/Conda) has some additional info and functions. 
 
-https://salmon.readthedocs.io/en/latest/
 
+> Note: if in Terminal when you open it and you get (base) Username. If you want to switch back to Z Shell, shell, bash, shell, or zsh
 
 
 ## Additional Resources
 
-Installing packages via [Homebrew](https://brew.sh)
+Installing packages via [Homebrew](https://brew.sh) REALLY RECOMMEND INSTALLING HOMEBREW! It will make your life easier by installing packages with all dependencies (aka other packages it needs to run).
 
 Kirill's [GitHub](https://github.com/ks4471)
 
 [Genome mapping](https://www.gencodegenes.org/mouse/) (recommended by Kirill)
 
+Also checkout Fastq Storage section of [get_SRR](https://github.com/fm2817/get_SRR) this has some great links and information about Imperial's HPC cluster and Research computing! In addition, [ARCHER](https://www.archer.ac.uk/training/courses/) also provides some great information on HPC - you can see individual course material [here](https://www.archer.ac.uk/training/past_courses.php). 
 
 
 Need to sort:
@@ -140,8 +143,7 @@ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3398141/
 https://bioconductor.org/packages/release/bioc/html/NOISeq.html
 https://rdrr.io/bioc/sva/man/ComBat.html
 https://rdrr.io/bioc/sva/man/svaseq.html
-https://salmon.readthedocs.io/en/latest/salmon.html#quantifying-in-mapping-based-mode
-	https://combine-lab.github.io/salmon/
+
 https://hcs7806.readthedocs.io/en/latest/RNA-Seq/
 
 https://hcs7806.readthedocs.io/en/latest/RNA-Seq/
