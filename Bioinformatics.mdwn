@@ -163,21 +163,4 @@ Kirill's [GitHub](https://github.com/ks4471)
 Also checkout Fastq Storage section of [get_SRR](https://github.com/fm2817/get_SRR) this has some great links and information about Imperial's HPC cluster and Research computing! In addition, [ARCHER](https://www.archer.ac.uk/training/courses/) also provides some great information on HPC - you can see individual course material [here](https://www.archer.ac.uk/training/past_courses.php). 
 
 
-Need to sort:
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3398141/
-https://bioconductor.org/packages/release/bioc/html/NOISeq.html
-https://rdrr.io/bioc/sva/man/ComBat.html
-https://rdrr.io/bioc/sva/man/svaseq.html
-
-https://hcs7806.readthedocs.io/en/latest/RNA-Seq/
-
-https://hcs7806.readthedocs.io/en/latest/RNA-Seq/
-
-"colorout": https://github.com/jalvesaq/colorout
-addR: https://github.com/ks4471/addR
-
-
-
-
-
 
