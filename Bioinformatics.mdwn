@@ -44,7 +44,8 @@ correctly and Mac doesn't come with these pre-installed.
 * [Clang 7.0.0.](https://cran.r-project.org/bin/macosx/tools/ "clang")
 * [GNU Fortran 6.1](https://cran.r-project.org/bin/macosx/tools/ "GNU")
     > Note: you don't need Tcl/Tk as R already comes with it. 
-* Command Line Tools and Developer Tools:
+* Command Line Tools (CTL) and Developer Tools: 
+    These tools include compilers and other tools that will allow you to build things from source. 
     1. Install XCode [use App Store, you will also need to make a free account]
     2. To install the command line tools, go into Terminal app and use:
            
@@ -128,6 +129,30 @@ Imperial's [Wiki](https://wiki.imperial.ac.uk/display/HPC/Conda) has some additi
 
 
 ## Additional Resources
+
+### Homebrew
+
+Homebrew is a great source to install missing packages with all dependencies (i.e. other packages that it needs to function) and is an essential tool to use. 
+In order to run Homebrew, you need to have the command line tools for Xcode [installed](#addtional-packages). In the terminal, use the following to install Homebrew:
+
+```zsh
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+To make Homebrew-installed programs available in your shell, you need to add your Homebrew installation location to your `$PATH`. If you have macOS 10.14 Mojave and newer, this is already done for you, otherwise find indstructions [here](https://sourabhbajaj.com/mac-setup/Homebrew/) on how to change your PATH. 
+If everything is working okay, you will see 
+
+```zsh
+brew doctor
+```
+
+To install a package, simply type:
+
+```zsh
+brew install <formula>
+```
+
+
 
 Installing packages via [Homebrew](https://brew.sh) REALLY RECOMMEND INSTALLING HOMEBREW! It will make your life easier by installing packages with all dependencies (aka other packages it needs to run).
 
