@@ -77,16 +77,26 @@ correctly and Mac doesn't come with these pre-installed.
 
 ## Overview of Analysis Process
 
-1. Acquire raw data - either in the form of fastq or fasta files. 
+1. Download the BiocManager from [Bioconductor](https://www.bioconductor.org/install/).
+In RStudio, input;
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.10")
+```
+
+
+2. Acquire raw data - either in the form of fastq or fasta files. 
     * You can use the SRA run selector to download raw data from GEO [see [get_SRR](https://github.com/fm2817/get_SRR "get_SRR"). Or you will need to demultiplex your reads using the `bcl2fastq` packages on RStudio. 
 
-2. Align your sequences to a reference sequence and map to genes. We use Salmon to do this. Salmon is able to produce a highly-accurate, transcript-level quantification estmiates from RNA-seq data. [see: [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)]. 
+3. Align your sequences to a reference sequence and map to genes. We use Salmon to do this. Salmon is able to produce a highly-accurate, transcript-level quantification estmiates from RNA-seq data. [see: [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)]. 
 
 > Additional details: 
 > https://combine-lab.github.io/salmon/getting_started/ 
 > https://github.com/COMBINE-lab/salmon
 
-3. Carry out analysis using DESeq2, edgeR or another appropriate analysis method. 
+4. Carry out analysis using DESeq2, edgeR or another appropriate analysis method. 
     * DESeq2: [beginner's guide](https://bioc.ism.ac.jp/packages/2.14/bioc/vignettes/DESeq2/inst/doc/beginner.pdf "beginner"), [vignettes](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html "DESeq2 Vignettes"), and [DESeq2 package](https://bioconductor.org/packages/release/bioc/html/DESeq2.html "DESeq2 package").
     * edgeR: [vignettes](http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/ "edgeR Vignettes"), and [edgeR package](https://bioconductor.org/packages/release/bioc/html/edgeR.html "edgeR package").
         
