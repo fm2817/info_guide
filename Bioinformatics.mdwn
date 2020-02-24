@@ -1,6 +1,7 @@
 # Bioinformatics 
 
 > Mac Version 1.0  //  Update: 18/02/20
+> Mac Version 1.1 // Update: 24/02/20
 
 
 This will provide a basic overview of setting up your computer for bioinformatic analysis of RNAseq data. 
