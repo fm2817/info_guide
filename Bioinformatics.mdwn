@@ -186,6 +186,7 @@ Other useful links:
 Combine lab salmon [GitHub](https://github.com/COMBINE-lab/salmon)
 [Documentation](https://salmon.readthedocs.io/en/latest/)
 Imperial's [Wiki](https://wiki.imperial.ac.uk/display/HPC/Conda) has some additional info and functions. 
+[UOA-eResearch GitHub](https://uoa-eresearch.github.io/eresearch-cookbook/): have some nice info on basic functions in conda.  
 
 
 > Note: if in Terminal when you open it and you get (base) Username. If you want to switch back to Z Shell, use `conda deactivate`. If you are in your `(salmon)` environment, you will need to run this twice, once to get back to `(base)` and once to get back to Z Shell. 
