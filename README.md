@@ -4,6 +4,7 @@ Some great resources to have a look at!
 
 One of the first things you should do is create a GitHub account! 
 Imperial also offers GitHub courses, here is the [course material](https://imperialcollegelondon.github.io/grad_school_git_course/). This has a great easy to follow explination of how to use GitHub!
+Imperial's [GitHub](https://github.com/ImperialCollegeLondon).
 
 
 This dude has a great [Mac Setup Guide](https://sourabhbajaj.com/mac-setup/) with sme great information on the various softwares and programmes/packages required. 
