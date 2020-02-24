@@ -13,7 +13,11 @@ This will provide a basic overview of setting up your computer for bioinformatic
  * [Overview of Analysis Process](#overview-of-analysis-process)
  * [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)
  * [Additional Resources](#additional-resources)
+    * [Homebrew](#homebrew)
+    * [Other Links](#other-links)
 
+
+---
 
 
 ## Basic Programmes for Installation
@@ -49,7 +53,7 @@ correctly and Mac doesn't come with these pre-installed.
     1. Install XCode [use App Store, you will also need to make a free account]
     2. To install the command line tools, go into Terminal app and use:
            
-        ```{r}
+        ```zsh
         xcode-select --install
         ```
 
@@ -74,11 +78,12 @@ correctly and Mac doesn't come with these pre-installed.
 
     5. Once you have done this, you will need to restart RStudio, R, and the terminal too. 
 
-
+ 
 ## Overview of Analysis Process
 
 1. Download the BiocManager from [Bioconductor](https://www.bioconductor.org/install/).
 In RStudio, input;
+
 
 ```{r}
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -108,9 +113,40 @@ BiocManager::install(version = "3.10")
 
 Salmon is a fast program to produce highly-accurate, transcript-level quantification estimates from RNA-seq data. In order to run Salmon, since it is a Linux/Unix based system you will need `Anaconda` in order to install it. This [link](https://combine-lab.github.io/salmon/getting_started/ "Anaconda") is a great beginners guide to installing and using Salmon. 
 
-You will need to install `Anaconda`: https://www.anaconda.com/distribution/. Click the Download link on the bottom left to install Python 3.7 version. Follow the instructions on the installer. You can use Anaconda both in Terminal and in the Anaconda-Navigator desktop app. Once you've downloaded Anaconda, head [here](https://anaconda.org/bioconda/salmon) to download and install Salmon (you can use either of the links and put the command into Terminal). After you have installed Salmon, head [here](https://combine-lab.github.io/salmon/getting_started/ "install Salmon") to set up your conda environment for Salmon; 
+You will need to install `Anaconda`: https://www.anaconda.com/distribution/. Click the Download link on the bottom left to install Python 3.7 version. Follow the instructions on the installer. You can use Anaconda both in Terminal and in the Anaconda-Navigator desktop app. Once you've downloaded Anaconda, if you are running OS X Catalina, you need to activate conda first (since new OS X uses zsh instead of bash). In your terminal, use;
 
-```{r}
+```zsh
+source <path to conda>/bin/activate
+conda init zsh
+```
+
+
+> Note: `bin` is short for binary (not bin/trash) and refers to built applications (also known as binaries). 
+
+
+Your terminal prompt should change to `(base) username ~ %`. Then up date your conda environment using;
+
+```zsh
+conda update conda
+```
+
+Now you can check that conda is installed properly using;
+
+```zsh
+conda list
+```
+
+This will show you all the conda packages and their versions you have installed. You can also check that Anaconda is installed properly by checking if Python's version information includes "Anaconda". To do this, use the command `python`. The output should say something along the lines of; `Python 3.7.4 (default, Aug 13 2019, 15:17:50) [Clang 4.0.1 (tags/RELEASE_401/final)] :: Anaconda, Inc. on darwin. Type "help", "copyright", "credits" or "license" for more information.`. If everything looks okay, you can exit the Python shell using `quit()`. 
+
+Now you are ready to download and install Salmon [here](https://anaconda.org/bioconda/salmon);
+
+```zsh
+conda install -c bioconda salmon
+```
+
+After you have installed Salmon, head [here](https://combine-lab.github.io/salmon/getting_started/ "install Salmon") to set up your conda environment for Salmon; 
+
+```zsh
 conda config --add channels conda-forge
 conda config --add channels bioconda
 conda create -n salmon salmon
@@ -119,23 +155,40 @@ conda create -n salmon salmon
 This will create a new environment in Anaconda where your salmon package is installed. 
 To activate your conda environment:
 
-```{r}
+```zsh
 conda activate salmon
 ```
 
-Then use to check that salmon is running on your system correctly. 
+You should now see that where it said `(base) username ~ %` it should now say `(salmon) username ~ %`. Then to check that salmon is running on your system correctly;
 
-```{r}
+```zsh
 salmon -h
 ```
 
-Useful links:
+Your output should say;
+
+```zsh 
+salmon v1.1.0
+Usage:  salmon -h|--help or 
+        salmon -v|--version or 
+        salmon -c|--cite or 
+        salmon [--no-version-check] <COMMAND> [-h | options]
+Commands:
+     index Create a salmon index
+     quant Quantify a sample
+     alevin single cell analysis
+     swim  Perform super-secret operation
+     quantmerge Merge multiple quantifications into a single file
+```
+
+
+Other useful links:
 Combine lab salmon [GitHub](https://github.com/COMBINE-lab/salmon)
 [Documentation](https://salmon.readthedocs.io/en/latest/)
 Imperial's [Wiki](https://wiki.imperial.ac.uk/display/HPC/Conda) has some additional info and functions. 
 
 
-> Note: if in Terminal when you open it and you get (base) Username. If you want to switch back to Z Shell, shell, bash, shell, or zsh
+> Note: if in Terminal when you open it and you get (base) Username. If you want to switch back to Z Shell, use `conda deactivate`. If you are in your `(salmon)` environment, you will need to run this twice, once to get back to `(base)` and once to get back to Z Shell. 
 
 
 ## Additional Resources
@@ -162,11 +215,9 @@ To install a package, simply type:
 brew install <formula>
 ```
 
+### Other Links
 
-
-Installing packages via [Homebrew](https://brew.sh) REALLY RECOMMEND INSTALLING HOMEBREW! It will make your life easier by installing packages with all dependencies (aka other packages it needs to run).
-
-Kirill's [GitHub](https://github.com/ks4471)
+See link: [GitHub](https://github.com/ks4471)
 
 [Genome mapping](https://www.gencodegenes.org/mouse/) (recommended by Kirill)
 
