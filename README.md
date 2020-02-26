@@ -9,7 +9,7 @@ Imperial also offers GitHub courses, here is the [course material](https://imper
 Imperial's [GitHub](https://github.com/ImperialCollegeLondon).
 
 
-This dude has a great [Mac Setup Guide](https://sourabhbajaj.com/mac-setup/) with sme great information on the various softwares and programmes/packages required. 
+This dude has a great [Mac Setup Guide](https://sourabhbajaj.com/mac-setup/) with some great information on the various softwares and programmes/packages required. 
 
 Also have a look at an Introduction to High Performance Computing (HPC) - provided by ARCHER: [part 1](https://archer-cse.github.io/2019-12-09-epcc-hpcshell/) and [part 2](https://archer-cse.github.io/2019-12-09-epcc-hpcintro/). Imperial also has its [own courses and introductory overview](https://github.com/fm2817/get_SRR#fastq-storage). 
 
