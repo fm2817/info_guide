@@ -33,6 +33,10 @@ If you still need help, check out [this video](https://vimeo.com/302461588).
 ## High Performance Computing
 
 blah blah 
+https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/using-ssh/
+https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/
+
+
 
 
 ## Transferring and Sharing Data
