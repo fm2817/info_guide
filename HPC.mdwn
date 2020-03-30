@@ -1,6 +1,6 @@
 # High Performance Computing
 
-> Mac Version  //  Update: 26/02/20
+> Mac Version  //  Update: 30/03/20
 
 
 This will provide a basic overview of using the High Performance Computing service offered by Imperial. The Research Computing Service at Imperial offers several services including acces to HPC and reserach data storage. 
@@ -9,6 +9,8 @@ This will provide a basic overview of using the High Performance Computing servi
 
 
  * [Getting Access](#getting-access)
+    * [Ethernet](#ethernet)
+    * [VPN](#vpn) 
  * [Transferring and Sharing Data](transferring-and-sharing-data)
  * [HPC courses](#hpc-courses)
   
@@ -23,12 +25,26 @@ You will need to get access to the [Research Computing Service](https://api.rcs.
 
 > [Getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/).
 
-You will also need access to the Imperial network. This is not a must, but VPN can be fishy. In order to do this, you need an ethernet cable and if you need any ethernet - usb adapter, this will need to be registered by ICT. Use ICT Ask to submit tasks to get this sorted. You can also visit them, the office is the basement of the common wealth building. (if you use the left elevators, turn right as you come out the elevators, then turn left, go all the way to the end of the hallway, go through the doors, turn right, go through the doors again, and the office is the first door on the right. There should be a sign saying ICT office. Please note their drop in hours are between 13:00-14:00 i think).
+You will also need access to the Imperial network. 
+
+### Ethernet 
+
+If you are on Campus, I recommend connecting directly to the Imperial network via an ethernet cable. For Mac, since the new laptops only have a USB-C connection, you will need a USB-C to ethernet adaptor - you can buy these at any Apple store or [online](https://www.amazon.co.uk/Belkin-F2CU040btBLK-Ethernet-Certified-Compatible/dp/B014FBQ738). 
+
+Next, you will need to register the adaptor with ICT. Use ICT Ask to submit a request or visit them during their drop-in hours (13:00-14:00). 
 
 Once you have access, you can connect to the [research data store](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/rds/) by going to `Go > Connect to Server > smb://rds.imperial.ac.uk/RDS/user/yourusername > connect`. 
 
 If you still need help, check out [this video](https://vimeo.com/302461588).
 
+> Note: ICT is located in the basement of the Common Wealth Building. If you use the elecators, turn right as you come out of them, then turn left. Go all the way to the end of the hallway, go through the doors, turn right and go through the doors again. Their office is the first door on the right. There should be a sign saying ICT office. 
+
+### VPN
+
+If you are working from home, you will need access to the Imperial Network via VPN. I use both [Tunnelblick](https://tunnelblick.net) and [Viscosity](https://www.sparklabs.com/viscosity/)
+but note that with Viscosity, you only have a 30 day trial - maybe we can purchase a license for the lab later on. I use Tunnelblick to access files via [FileZilla](https://filezilla-project.org). This is a great way to view and organise your files. Once you have FileZilla downloaded and open, where it says Host enter: `sftp://login.hpc.ic.ac.uk`, under Username enter `yourusername` and enter your password under Password. Leave Port blank. Now click Quickconnect. 
+
+![image](FileZilla_Image.png)
 
 ## High Performance Computing
 
