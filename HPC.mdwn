@@ -44,7 +44,7 @@ If you still need help, check out [this video](https://vimeo.com/302461588).
 If you are working from home, you will need access to the Imperial Network via VPN. I use both [Tunnelblick](https://tunnelblick.net) and [Viscosity](https://www.sparklabs.com/viscosity/)
 but note that with Viscosity, you only have a 30 day trial - maybe we can purchase a license for the lab later on. I use Tunnelblick to access files via [FileZilla](https://filezilla-project.org). This is a great way to view and organise your files. Once you have FileZilla downloaded and open, where it says Host enter: `sftp://login.hpc.ic.ac.uk`, under Username enter `yourusername` and enter your password under Password. Leave Port blank. Now click Quickconnect. 
 
-![image](FileZilla_Image.png)
+![image](~/Users/franziska/Documents/PhD/Bioinformatics/Information/info_guide/FileZilla_Image.png)
 
 ## High Performance Computing
 
