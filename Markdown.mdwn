@@ -1,0 +1,5 @@
+## Markdown
+
+https://www.markdownguide.org/basic-syntax/#images-1
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images
+
