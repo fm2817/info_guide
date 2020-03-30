@@ -1,0 +1,228 @@
+# Bioinformatics 
+
+> Mac Version  //  Update: 24/02/20
+
+
+This will provide a basic overview of setting up your computer for bioinformatic analysis of RNAseq data. 
+
+---
+
+
+ * [Basic Programmes for Installation](#basic-programmes-for-installation)
+   * [Additional Packages](#additional-packages)
+ * [Overview of Analysis Process](#overview-of-analysis-process)
+ * [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)
+ * [Additional Resources](#additional-resources)
+    * [Homebrew](#homebrew)
+    * [Other Links](#other-links)
+
+
+---
+
+
+## Basic Programmes for Installation
+
+Most of our anaylsis will be done using R or Command Line language. 
+Some steps also involve Python, but in the terminal and is simple to follow. 
+Some basic programmes need to be installed (see below) and you will also need 
+an account with Imperail HPC and connect to the cluster (more about this later).
+
+* Install the [latest](https://cran.r-project.org/bin/macosx/ "R") version of R [R 3.6.2]
+* Install [RStudio](https://rstudio.com/products/rstudio/download/ "RStudio") [chooose the free desktop version]
+* Install [Visual Studio Code](https://code.visualstudio.com "VSC")
+    * This is a great addition to RStudio and while I prefer to use RStudio if 
+    I am purely coding in R, VSCode enables cross-langauge compatibility and
+    Git commands built-in 
+* Set up a [Git Hub](https://github.com "Git") account [again choose the free option]
+* [Docker](https://docker-curriculum.com "Docker") is another nice application to run code in a clean environment 
+
+
+
+### Additional Packages
+
+You will also need to install some additional packages in order to run R and RStudio 
+correctly and Mac doesn't come with these pre-installed. 
+
+* [XQuartz](https://www.xquartz.org "XQuartz") [latest version] 
+    > Note: always re-install XQuartz when upgrading to a new major version
+* [Clang 7.0.0.](https://cran.r-project.org/bin/macosx/tools/ "clang")
+* [GNU Fortran 6.1](https://cran.r-project.org/bin/macosx/tools/ "GNU")
+    > Note: you don't need Tcl/Tk as R already comes with it. 
+* Command Line Tools (CTL) and Developer Tools: 
+    These tools include compilers and other tools that will allow you to build things from source. 
+    1. Install XCode [use App Store, you will also need to make a free account]
+    2. To install the command line tools, go into Terminal app and use:
+           
+        ```zsh
+        xcode-select --install
+        ```
+
+        This will install the command line tools. Additional info can be found [here](https://docs.brew.sh/Installation "clt")
+    3.  In terminal, use the command:
+            
+        ```{r}
+        R
+        options(menu.graphics=F)
+        install.packages("processx")
+        ```
+
+        After you hit enter for `install.packages("processx")`, you will see a list of mirrors come up. These basically help download your packages from a closer server. Use the UK - Bristol server [try Bristol first and if it doesn't work then use the UK - London server]. 
+        You need this package to install the development tools. Additional info can be found [here](https://github.com/r-lib/processx "processx"). 
+    4. In terminal, use the command:
+           
+        ```{r}
+        install.packages("devtools")
+        ```
+
+        This will install the developer tools. Additional info can be found [here](https://www.r-project.org/nosvn/pandoc/devtools.html "devtools"). 
+
+    5. Once you have done this, you will need to restart RStudio, R, and the terminal too. 
+
+ 
+## Overview of Analysis Process
+
+1. Download the BiocManager from [Bioconductor](https://www.bioconductor.org/install/).
+In RStudio, input;
+
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.10")
+```
+
+
+2. Acquire raw data - either in the form of fastq or fasta files. 
+    * You can use the SRA run selector to download raw data from GEO [see [get_SRR](https://github.com/fm2817/get_SRR "get_SRR"). Or you will need to demultiplex your reads using the `bcl2fastq` packages on RStudio. 
+
+3. Align your sequences to a reference sequence and map to genes. We use Salmon to do this. Salmon is able to produce a highly-accurate, transcript-level quantification estmiates from RNA-seq data. [see: [Using Anaconda to Run Salmon](#using-anaconda-to-run-salmon)]. 
+
+> Additional details: 
+> https://combine-lab.github.io/salmon/getting_started/ 
+> https://github.com/COMBINE-lab/salmon
+
+4. Carry out analysis using DESeq2, edgeR or another appropriate analysis method. 
+    * DESeq2: [beginner's guide](https://bioc.ism.ac.jp/packages/2.14/bioc/vignettes/DESeq2/inst/doc/beginner.pdf "beginner"), [vignettes](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html "DESeq2 Vignettes"), and [DESeq2 package](https://bioconductor.org/packages/release/bioc/html/DESeq2.html "DESeq2 package").
+    * edgeR: [vignettes](http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/ "edgeR Vignettes"), and [edgeR package](https://bioconductor.org/packages/release/bioc/html/edgeR.html "edgeR package").
+        
+
+> Note: I recommend using DESeq2. Also [here](https://www.biostars.org/p/284775/ "DESeq2vsEdgeR") is a really nice explanation of the differences.
+
+
+## Using Anaconda to Run Salmon 
+
+Salmon is a fast program to produce highly-accurate, transcript-level quantification estimates from RNA-seq data. In order to run Salmon, since it is a Linux/Unix based system you will need `Anaconda` in order to install it. This [link](https://combine-lab.github.io/salmon/getting_started/ "Anaconda") is a great beginners guide to installing and using Salmon. 
+
+You will need to install `Anaconda`: https://www.anaconda.com/distribution/. Click the Download link on the bottom left to install Python 3.7 version. Follow the instructions on the installer. You can use Anaconda both in Terminal and in the Anaconda-Navigator desktop app. Once you've downloaded Anaconda, if you are running OS X Catalina, you need to activate conda first (since new OS X uses zsh instead of bash). In your terminal, use;
+
+```zsh
+source <path to conda>/bin/activate
+conda init zsh
+```
+
+
+> Note: `bin` is short for binary (not bin/trash) and refers to built applications (also known as binaries). 
+
+
+Your terminal prompt should change to `(base) username ~ %`. Then up date your conda environment using;
+
+```zsh
+conda update conda
+```
+
+Now you can check that conda is installed properly using;
+
+```zsh
+conda list
+```
+
+This will show you all the conda packages and their versions you have installed. You can also check that Anaconda is installed properly by checking if Python's version information includes "Anaconda". To do this, use the command `python`. The output should say something along the lines of; `Python 3.7.4 (default, Aug 13 2019, 15:17:50) [Clang 4.0.1 (tags/RELEASE_401/final)] :: Anaconda, Inc. on darwin. Type "help", "copyright", "credits" or "license" for more information.`. If everything looks okay, you can exit the Python shell using `quit()`. 
+
+Now you are ready to download and install Salmon [here](https://anaconda.org/bioconda/salmon);
+
+```zsh
+conda install -c bioconda salmon
+```
+
+After you have installed Salmon, head [here](https://combine-lab.github.io/salmon/getting_started/ "install Salmon") to set up your conda environment for Salmon; 
+
+```zsh
+conda config --add channels conda-forge
+conda config --add channels bioconda
+conda create -n salmon salmon
+```
+
+This will create a new environment in Anaconda where your salmon package is installed. 
+To activate your conda environment:
+
+```zsh
+conda activate salmon
+```
+
+You should now see that where it said `(base) username ~ %` it should now say `(salmon) username ~ %`. Then to check that salmon is running on your system correctly;
+
+```zsh
+salmon -h
+```
+
+Your output should say;
+
+```zsh 
+salmon v1.1.0
+Usage:  salmon -h|--help or 
+        salmon -v|--version or 
+        salmon -c|--cite or 
+        salmon [--no-version-check] <COMMAND> [-h | options]
+Commands:
+     index Create a salmon index
+     quant Quantify a sample
+     alevin single cell analysis
+     swim  Perform super-secret operation
+     quantmerge Merge multiple quantifications into a single file
+```
+
+
+Other useful links:
+Combine lab salmon [GitHub](https://github.com/COMBINE-lab/salmon)
+[Documentation](https://salmon.readthedocs.io/en/latest/)
+Imperial's [Wiki](https://wiki.imperial.ac.uk/display/HPC/Conda) has some additional info and functions. 
+[UOA-eResearch GitHub](https://uoa-eresearch.github.io/eresearch-cookbook/): have some nice info on basic functions in conda.  
+
+
+> Note: if in Terminal when you open it and you get (base) Username. If you want to switch back to Z Shell, use `conda deactivate`. If you are in your `(salmon)` environment, you will need to run this twice, once to get back to `(base)` and once to get back to Z Shell. 
+
+
+## Additional Resources
+
+### Homebrew
+
+Homebrew is a great source to install missing packages with all dependencies (i.e. other packages that it needs to function) and is an essential tool to use. 
+In order to run Homebrew, you need to have the command line tools for Xcode [installed](#addtional-packages). In the terminal, use the following to install Homebrew:
+
+```zsh
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+To make Homebrew-installed programs available in your shell, you need to add your Homebrew installation location to your `$PATH`. If you have macOS 10.14 Mojave and newer, this is already done for you, otherwise find indstructions [here](https://sourabhbajaj.com/mac-setup/Homebrew/) on how to change your PATH. 
+If everything is working okay, you will see 
+
+```zsh
+brew doctor
+```
+
+To install a package, simply type:
+
+```zsh
+brew install <formula>
+```
+
+### Other Links
+
+See link: [GitHub](https://github.com/ks4471)
+
+[Genome mapping](https://www.gencodegenes.org/mouse/) (recommended by Kirill)
+
+Also checkout Fastq Storage section of [get_SRR](https://github.com/fm2817/get_SRR) this has some great links and information about Imperial's HPC cluster and Research computing! In addition, [ARCHER](https://www.archer.ac.uk/training/courses/) also provides some great information on HPC - you can see individual course material [here](https://www.archer.ac.uk/training/past_courses.php). 
+
+
+
