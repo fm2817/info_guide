@@ -1,6 +1,6 @@
 # High Performance Computing
 
-> Mac Version  //  Update: 30/03/20
+> Mac Version  //  Update: 30/03/20 Adapted from [Beginner's guide to HPC at Imperial](https://imperialcollegelondon.app.box.com/s/fsoiljuf43f7ko4tfvqifbyrfj8yslbi) 
 
 
 This will provide a basic overview of using the High Performance Computing service offered by Imperial. The Research Computing Service at Imperial offers several services including acces to HPC and reserach data storage. 
@@ -8,18 +8,22 @@ This will provide a basic overview of using the High Performance Computing servi
 ---
 
 
- * [Getting Access](#getting-access)
+ * [Access](#access)
     * [Ethernet](#ethernet)
     * [VPN](#vpn) 
- * [Transferring and Sharing Data](transferring-and-sharing-data)
- * [HPC courses](#hpc-courses)
+ * [Why use HPC?](why-use-hpc?)
+ * [Using the cluster](using-the-cluster)
+   * [Operating in Terminal](operating-in-terminal)
+ * [Globus](globus)
+ * [HPC Courses](#hpc-courses)
+ * [Additional Information](additional-information)
   
 
 
 ---
 
 
-## Getting Access
+## Access
 
 You will need to get access to the [Research Computing Service](https://api.rcs.imperial.ac.uk/groups/manage/hpc-access/). Simone already has an account `hpc-sdigiova`. If you are a post-doc, PhD or research postgrad student, you will need to ask Ilaria to register you.
 
@@ -46,18 +50,93 @@ but note that with Viscosity, you only have a 30 day trial - maybe we can purcha
 
 ![FileZilla](FileZilla_Image.png)
 
+If you don't want to use FileZilla, you can also connect to the RDS with Finder on your Mac by: Finder -> Go -> Connect to Server -> Server address. The address you enter is `smb://rds.imperial.ac.uk/RDS/user/your_username`. Under your_username, enter your Imperial username e.g. fm2817. 
+
+You can also use the command line:
+
+To copy files form the current directory on your machine to your home directory on RDS:
+
+   ```zsh
+   scp file.txt username@login.hpc.ic.ac.uk:~
+   ```
+
+To copy files from your home directory on RDS to the current directoy on your machine:
+
+   ```zsh
+   scp username@login.hpc.ic.ac.uk:~/file2.txt
+   ```
+
+e.g. `scp/Users/katerina/Desktop/file3.txt  username@login.hpc.ic.ac.uk:/rds/general/user/kmichali/home/projectx`
 
 
-## High Performance Computing
+## Why use HPC?
+
+If you plan on carrying out Bioinformatic Analysis, high performance computing will make your life easier.
+
+Some Basics:
+
+A **computer cluster** consists of a set of connected computers that work together - in this way, they can be viewed as a single system.
+
+![computer](computer_cluster.png) 
+
+Inside one of these computer racks, are individual computers aka a compute **node**.
+
+![node](node.png)
+
+Compute nodes are made up of multiple **cores** that can access the same memory. A core is the basic computation unit inside a processor that can run a single process. HPC's processors contain up to 14 cores. 
+
+A **Job** is a program you run on the cluster
+
+A **submit job** is the  instruction sent to the cluster to run your program
+
+**Memory** refers to the main memory or RAM - fast memory directly connected to the processor. 
+
+**Serial code** refers to running a program on one core
+
+**Parallel code** referes to running a program on two or more cores. 
+
+What can these clusters do? The cluster can serve to offload code execution from your laptpo/workstation - basically makes your life easier by freeing up your computer which would be otherwise occupied by code that tuns too long or needs too much memory or disk space. 
+They are particularily useful if you need to run multiple tasks at the same time - serial/parallel code. 
+
+Different types of jobs:
+* High-throughput tasks - large number of relatively small jobs
+* Parallel jobs on a single node
+* Parallel jobs on multiple nodes (from 2 to 270 nodes)
+* Large single node memory jobs (up to TB of memory)
+* Jobs using GPUs (such as machine learning tasks)
+* Long-running jobs (up to 1000 hr)
+
+
+## Using the Cluster 
+
+All computers in the HPC resource are connected to one parallel filesystem - [Research Data Store (RDS)](http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/data-management/). When you have an account, you will have access to:
+* your home directory `$HOME` - personal working space; 1 TB allocation (up to 10 mil files)
+* temorpary stoarge `$EPHEMERAL` - addditional individual working space, unlimited allocation, but files are deleted after 30 days
+* allocated project space `$RDS_PROJECT` - your project allocations: `genomics-data`. 
+
+### Operating in Termianl 
+
+The HPC system is a linus operating system that uses Bash shell. You can work directly in your Terminal. 
+To login: 
+   ```zsh
+   ssh your_username@login.hpc.ac.ac.uk
+   ```
+
+You will see something like this when you've executed your command:
+
+![HPC environment](HPC_environ.png)
+
+Here you can see how much space you have used in your Home and Ephemeral folders. 
+
+
+
 
 blah blah 
 https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/using-ssh/
 https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/
 
 
-
-
-## Transferring and Sharing Data
+## Globus
 
 You can use [Globus](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/rds/globus/) to share and transfer data from your RDS to an external site. [Log into Globus][1], select **Imperial College London** from the trusted organisations in the drop down list.
 
@@ -73,3 +152,19 @@ The first time you log in, you will need to register for a Globus account.
 ## HPC Courses
 
 Imperial offers courses on using the HPC system. You can find dates [here](https://wiki.imperial.ac.uk/display/HPC/Courses). I would recommend the `Beginner's guide to HPC at Imperial - from serial jobs to data parallelism` course. Before going on the course you will have to have some knowledge of the Linux command line such as the management comands `pwd, mkdir, cd, cp, mv, rm, cat, head, tail` and the nano text editor. If you are unfamiliar with these terms, please have a look [here](https://wiki.imperial.ac.uk/pages/viewpage.action?spaceKey=HPC&title=Command+line) first before the course. 
+
+
+## Additional Information
+
+Who to contact?
+
+![contact](contact.png)
+
+* User support - rcs-support@imperial.ac.uk or http://imperial.service-now.com/ask
+* Website - imperial.ac.uk/ict/rcs
+* Getting started - http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/
+* Weekly drop-in clinincs: http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/attend-a-clinic/
+* Service status - https://selfservice.rcs.imperial.ac.uk/saml/acs/
+* Self-service selfservice.rcs.imperial.ac.uk (group management, hob monitoring and extensions, etc.)
+
+> Note: drop-in clinics are planned to open at Hammersmith twice a month soon. 
