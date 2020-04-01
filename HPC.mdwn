@@ -3,9 +3,16 @@
 > Mac Version  //  Update: 30/03/20 Adapted from [Beginner's guide to HPC at Imperial](https://imperialcollegelondon.app.box.com/s/fsoiljuf43f7ko4tfvqifbyrfj8yslbi) 
 
 
+---
+
+
 This will provide an overview of using the High Performance Computing (HPC) service offered by Imperial. The Research Computing Service at Imperial offers several services including acces to HPC and reserach data storage (RDS). 
 
+
 ---
+
+
+
 
 
  * [Access](#access)
@@ -16,6 +23,11 @@ This will provide an overview of using the High Performance Computing (HPC) serv
    * [Operating in Terminal](#operating-in-terminal)
       * [Loading Modules](#loading-modules)
       * [My Recommendations](#my-recommendations)
+   * [Running Software](#running-software)
+      * [Job Duration Requirement](#job-duration-requirement)
+      * [Memory Requirement](#memory-requirement)
+      * [Number of Parallel Processes](#number-of-parallel-processes)
+      * [Job Sizing](#job-sizing)
  * [Globus](#globus)
  * [HPC Courses](#hpc-courses)
  * [Additional Information](#additional-information)
@@ -27,11 +39,13 @@ This will provide an overview of using the High Performance Computing (HPC) serv
 
 ## Access
 
-You will need to get access to the [Research Computing Service](https://api.rcs.imperial.ac.uk/groups/manage/hpc-access/). Simone already has an account `hpc-sdigiova`. If you are a post-doc, PhD or research postgrad student, you will need to ask Ilaria or Simone to register you.
+You will need to have access to the [Research Computing Service](https://api.rcs.imperial.ac.uk/groups/manage/hpc-access/). Simone already has an account `hpc-sdigiova`. If you are a post-doc, PhD or research postgrad student, you will need to ask Ilaria or Simone to register you.
 
-> [Getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/).
+> Do this first: [Getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/).
 
-You will also need access to the Imperial network. 
+***You will also need access to the Imperial network***. 
+
+
 
 ### Ethernet 
 
@@ -39,22 +53,30 @@ If you are on Campus, I recommend connecting directly to the Imperial network vi
 
 Next, you will need to register the adaptor with ICT. Use ICT Ask to submit a request or visit them during their drop-in hours (13:00-14:00). 
 
-Once you have access, you can connect to the [research data store](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/rds/) by going to `Go > Connect to Server > smb://rds.imperial.ac.uk/RDS/user/yourusername > connect`. 
+Once you have access, you can connect to the [research data store](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/rds/) by going to: 
+
+
+`Go > Connect to Server > smb://rds.imperial.ac.uk/RDS/user/yourusername > connect`
+
 
 If you still need help, check out [this video](https://vimeo.com/302461588).
 
-> Note: ICT is located in the basement of the Common Wealth Building. If you use the elecators, turn right as you come out of them, then turn left. Go all the way to the end of the hallway, go through the doors, turn right and go through the doors again. Their office is the first door on the right. There should be a sign saying ICT office. 
+
+   > Note: ICT is located in the basement of the Common Wealth Building. If you use the elecators, turn right as you come out of them, then turn left. Go all the way to the end of the hallway, go through the doors, turn right and go through the doors again. Their office is the first door on the right. There should be a sign saying ICT office. 
+
+
 
 ### VPN
 
-If you are working from home, you will need access to the Imperial Network via VPN. I use both [Tunnelblick](https://tunnelblick.net) and [Viscosity](https://www.sparklabs.com/viscosity/)
-but note that with Viscosity, you only have a 30 day trial - maybe we can purchase a license for the lab later on. I use Tunnelblick to access files via [FileZilla](https://filezilla-project.org). This is a great way to view and organise your files. Once you have FileZilla downloaded and open, where it says Host enter: `sftp://login.hpc.ic.ac.uk`, under Username enter `yourusername` and enter your password under Password. Leave Port blank. Now click Quickconnect. 
+If you are working from home, you will need access to the Imperial Network via VPN. I use both [Tunnelblick](https://tunnelblick.net) and [Viscosity](https://www.sparklabs.com/viscosity/). But note that with Viscosity, you only have a 30 day trial - maybe we can purchase a license for the lab later on. I use Tunnelblick to access files via [FileZilla](https://filezilla-project.org). This is a great way to view and organise your files. Once you have FileZilla downloaded and open, where it says Host enter: `sftp://login.hpc.ic.ac.uk`, under Username enter `yourusername` and enter your password under Password. Leave Port blank. Now click Quickconnect. 
+
+
 
 ![FileZilla](images/FileZilla_Image.png)
 
-If you don't want to use FileZilla, you can also connect to the RDS with Finder on your Mac by: Finder -> Go -> Connect to Server -> Server address. The address you enter is `smb://rds.imperial.ac.uk/RDS/user/your_username`. Under your_username, enter your Imperial username e.g. fm2817. 
 
-You can also use the command line:
+
+**You can also use the command line:**
 
 To copy files form the current directory on your machine to your home directory on RDS:
 
@@ -70,14 +92,19 @@ To copy files from your home directory on RDS to the current directoy on your ma
 
 e.g. `scp/Users/katerina/Desktop/file3.txt  username@login.hpc.ic.ac.uk:/rds/general/user/kmichali/home/projectx`
 
-> Note: for all these options, you need to have VPN connection to the Imperial network. 
+
+   > Note: for all these options, you need to have VPN connection to the Imperial network. 
+
+
+---
 
 
 ## Why use HPC?
 
 If you plan on carrying out Bioinformatic Analysis, **high performance computing will make your life easier**.
 
-Some Basics:
+
+### Some Basics
 
 A **computer cluster** consists of a set of connected computers that work together - in this way, they can be viewed as a ***single system***.
 
@@ -87,31 +114,32 @@ Inside one of these computer racks, are individual computers aka a **node**.
 
 ![node](images/node.png)
 
+
+
 Nodes are made up of multiple **cores** that can access the same memory. A core is the basic computation unit inside a processor that can run a single process. HPC's processors contain up to 14 cores. 
 
 Some other terms to get comfortable with:
+   * A **Job** is a program you run on the cluster
+   * A **Submit Job** is the  instruction sent to the cluster to run your program
+   * **Memory** refers to the main memory or RAM - fast memory directly connected to the processor. 
+   * **Serial Code** refers to running a program on one core
+   * **Parallel Code** referes to running a program on two or more cores. 
 
-A **Job** is a program you run on the cluster
 
-A **Submit Job** is the  instruction sent to the cluster to run your program
+*What can these clusters actually do?* 
 
-**Memory** refers to the main memory or RAM - fast memory directly connected to the processor. 
-
-**Serial Code** refers to running a program on one core
-
-**Parallel Code** referes to running a program on two or more cores. 
-
-***What can these clusters actually do?*** 
-
-The cluster can serve to offload code execution from your laptpo/workstation - basically makes your life easier by freeing up your computer which would be otherwise occupied by code that runs too long or needs too much memory or disk space. They are particularily useful if you need to run multiple tasks at the same time - serial/parallel code. 
+The cluster can serve to offload code execution from your laptop/workstation - basically makes your life easier by freeing up your computer which would be otherwise occupied by code that runs too long or needs too much memory or disk space. This is particularily useful if you need to run multiple tasks at the same time - serial/parallel code. 
 
 Examples of different types of jobs:
-* High-throughput tasks - large number of relatively small jobs
-* Parallel jobs on a single node (threaded)
-* Parallel jobs on multiple nodes (from 2 to 270 nodes) (MPI)
-* Large single node memory jobs (up to TB of memory)
-* Jobs using GPUs (such as machine learning tasks)
-* Long-running jobs (up to 1000 hr)
+   * High-throughput tasks - large number of relatively small jobs
+   * Parallel jobs on a single node (threaded)
+   * Parallel jobs on multiple nodes (from 2 to 270 nodes) (MPI)
+   * Large single node memory jobs (up to TB of memory)
+   * Jobs using GPUs (such as machine learning tasks)
+   * Long-running jobs (up to 1000 hr)
+
+
+---
 
 
 ## Using the Cluster 
@@ -133,7 +161,10 @@ To login:
 
 This might take a few minutes to load, especially if you are on VPN. It will then ask you for your password, enter it. After You will see something like this after you've executed your command:
 
+
 ![HPC environment](images/HPC_environ.png)
+
+
 
 Here you can see some details and also how much space you have used in your Home and Ephemeral folders as well as the group project folder. 
 If you type `hostname` you can see which login node you are connected too e.g. `login-5`. If you type in `who | wc -l` you can check how many people are connected to that login node. 
@@ -143,80 +174,88 @@ If you type `hostname` you can see which login node you are connected too e.g. `
 
 You need to load modules to set the environment to use a software package.
 Some basic commands:
-* List all modules available: `module avail`
-* Find a module for your software: `module avail your_software`
-* Load a module: `module load your_software`
-* Load a specific version: `module load you_software/version_number`
-* List all loaded modules: `module list`
-* Swap modules: ` module switch your_software your_software/version_number`
-* Unload a module: `module unload your_software/version_number`
-* Get rid of all loaded modules: `module purge`
+   * List all modules available: `module avail`
+   * Find a module for your software: `module avail your_software`
+   * Load a module: `module load your_software`
+   * Load a specific version: `module load you_software/version_number`
+   * List all loaded modules: `module list`
+   * Swap modules: ` module switch your_software your_software/version_number`
+   * Unload a module: `module unload your_software/version_number`
+   * Get rid of all loaded modules: `module purge`
+
 
 ![module](images/module_list.png)
+
+
 
 If you can't find the software you need, check if it is available via Anaconda and install it yourself.
 You can also submit a request via ICT ASK: https://imperial.service-now.com/ask (and search for "RCS Software Install Request").
 You can install packages into your home directory. 
 
-**Loading Anaconda:**
+
+*Loading Anaconda:*
 
 In Terminal, one you are signed in, use: 
 
-```zsh
-module load anaconda3/personal
-anaconda-setup
-```
+   ```zsh
+   module load anaconda3/personal
+   anaconda-setup
+   ```
 
-This is done only once. Afterwards, using `module load anaconda3/personal` will setup your personal python environment. Anaconda is great because it enables you to create separate package environments for your projects. This helps to avoid version and dependency conflicts. (to actiavte anaconda3/personal you will need to enter `source activate`, now you will see `(base) -bashxxx`.
+This is done only once. Afterwards, using `module load anaconda3/personal` to setup your personal python environment. Anaconda is great because it enables you to create separate package environments for your projects. This helps to avoid version and dependency conflicts. (to actiavte anaconda3/personal you will need to enter `source activate` (or `conda activate` depending on the version), now you will see `(base) -bashxxx`.
 
-For example, installing `scipy` in a separate environment and some useful commands:
+      For example, installing `scipy` in a separate environment and some useful commands:
 
-```python
-conda create -n projectx python  #create new environment
-souce activate projectx #activate the environment
-conda install scupy #install scipy
-source deactivate #deactivate current environment
-```
+         ```python
+         conda create -n projectx python  #create new environment
+         souce activate projectx #activate the environment
+         conda install scupy #install scipy
+         source deactivate #deactivate current environment
+         ```
 
-**Setting up R:**
+
+*Setting up R:*
 
 R and libraries can be installed using your personal Anaconda. Setup a new environment:
 
-```python
-conda create -n Renv
-```
+   ```python
+   conda create -n Renv
+   ```
 
 Then activate it:
 
-```python
-source activate Renv
-```
+   ```python
+   source activate Renv
+   ```
 
 Now you can install packages using conda install or from within R (plus other libs eg bioconductor-teqc).
 
-```python
-conda install r -c conda-forge #using the conda-forge channel
-```
+   ```python
+   conda install r -c conda-forge #using the conda-forge channel
+   ```
 
-```python
-conda install bioconductor-teqc -c conda-forge #installing bioconductor-teqc using the conda-forge channel 
-```
+   ```python
+   conda install bioconductor-teqc -c conda-forge #installing bioconductor-teqc using the conda-forge channel 
+   ```
+
 
 [More info here](http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/applications/r-including-bioconductor/).
 
+
 ***Assembling the command line is your repsonsibility***, it requires some knowledge of the particular package. ICT can help to make sure the application is running correctly and advise you on managing your files. They can also comment on individual applications to some degree.
 
-For example: 
-* pythonpython_code.py–iinput.txt–o output.txt
-* matlab-nodesktop–nodisplay–nosplash< matlab_script.m
-* RCMD BATCH r_script.R
-* bashshell_script.sh
-* g09water.com> log
-* blastall-iquery -d fasta_db-o output
-* mpiexecnwcheminput.nw> log
+   For example: 
+      * pythonpython_code.py–iinput.txt–o output.txt
+      * matlab-nodesktop–nodisplay–nosplash< matlab_script.m
+      * RCMD BATCH r_script.R
+      * bashshell_script.sh
+      * g09water.com> log
+      * blastall-iquery -d fasta_db-o output
+      * mpiexecnwcheminput.nw> log
 
 
 #### My Recommendations
+
 * Create an Renv in Anaconda as mentioned earlier becasue the base R that is available is at a lower version (not that this is bad, but would need to make sure all packages are for that version too).
 * Install conda-forge (good base packages to have)
 * In addition, also: `conda install r-essentials e-base` (this will install two additional files with all essential packages for example processx)
@@ -235,89 +274,113 @@ For example:
    * `conda install -c bioconda sra-tools`
 
 
-#### Running Software
 
-Do not execute your program from the command line! WHY? When you log into the cluster, you find yourself on one of the four login nodes. If all users compute here, the nodes will be overwhlemed and the rest of the cluster will be idle. Instead, instruct the **cluster resource manager** to execute your job. 
+
+### Running Software
+
+***Do not execute your program from the command line!*** WHY? When you log into the cluster, you find yourself on one of the four login nodes. If all users compute here, the nodes will be overwhlemed and the rest of the cluster will be idle. Instead, instruct the **cluster resource manager** to execute your job. 
 
 The cluster resource manager takes care of sorting your requests into job classes, scheduling your requests, starting jobs when compute resources become avaiable, monitoring jobs, and producing jobs. To communicate with the resource manager, you need to write a **shell script (or job script)** instructing the resource manager what to do for you. Passing your finished script to the resource manager is called **submitting a job**. 
 
 The resource manager needs to known your ***command*** and also what ***resources*** your job needs. Every job script must also specify ***run time***, ***memory (RAM)***, and ***number of cores needed*** to run the job. If the requested resources are exceeded during the job run, the job is terminated. The bigger the resource, the longer the wait for a job start. 
 
+
 ---
+
 
 **Lets try an example - hello hpc!**
 
-First lets create a test working directory in Terminal. Use `pwd` (aka print working directory) to check what your current working directory is. Make sure its `/rds/general/user/your_username/home`. In here, lets create the working directory "test" using the command `mkdir test`. Now you need to navigate into that directory, so use `cd test` (aka change directoty to test). If you run `pwd` again, you will see that you are now in `/rds/general/user/your_username/home/test`.
+First lets create a test working directory in Terminal. Use `pwd` (aka print working directory) to check what your current working directory is. Make sure it's:
+
+    `/rds/general/user/your_username/home`. 
+
+In here, lets create the working directory "test" using the command `mkdir test`. Now you need to navigate into that directory, so use `cd test` (aka change directoty to test). If you run `pwd` again, you will see that you are now in:
+
+   `/rds/general/user/your_username/home/test`
+
 
 Next, open up Nano (just type in nano and hit enter). You will use nano to write your job script.
 
-```
-#PBS -l walltime=00:10:00 <- job parameters (time)
-#PBS -l select=1:ncpus=1:mem=1gb <- job parameters (select=node_number)
+   ```
+   #PBS -l walltime=00:10:00 <- job parameters (time)
+   #PBS -l select=1:ncpus=1:mem=1gb <- job parameters (select=node_number)
 
-module load hellohpc <-load software
+   module load hellohpc <-load software
 
-hellohpc.py <- your command
-```
+   hellohpc.py <- your command
+   ```
 
-> Note: ignore the <--xxxxxx these are just explinations i have included. 
+   > Note: don't include the <-xxxxxx these are just explanations I have included. 
 
-Now hit control+O to save and give the document a title, eg. submit.pbs
-The hit enter and hit control+X to exit nano. 
+Now hit control+O to save and give the document a title, eg. submit.pbs. Then hit enter and hit control+X to exit nano. 
 
 Now you are ready to submit your job. First let's check what the job is again -> also good to check for any errors. To do this, use `cat submit.pbs`. 
+
 This should print the job script you just wrote. Now let us submit the script using `qsub submit.pbs`. This should give you a job ID, eg. 126610.pbs. 
 
 If you want to check the status of your job, use `qstat` to check IDs for all jobs, or `qstat job_ID` for a specific job ID. Use `ll *job_ID` to check the output of you submit. 
 
+
 Resource manager commands:
-* `qsub your_script` - submit your job and system returns a jobid
-* `qstat` or `qstat job_ID` - short overview of your jobs 
-* `qdel job_ID` - to remove a job from the system > Note it takes a few minutes for you to see an update. 
-* `ll *job_ID` - to check the files produced: the top file are any error messages that may have occured; the bottom one is the screen output and resource manager messages. 
+   * `qsub your_script` - submit your job and system returns a jobid
+   * `qstat` or `qstat job_ID` - short overview of your jobs 
+   * `qdel job_ID` - to remove a job from the system > Note it takes a few minutes for you to see an update. 
+   * `ll *job_ID` - to check the files produced: the top file are any error messages that may have occured; the bottom one is the screen output and resource manager messages. 
+
 
 The system expects the followng syntax at the ***top*** of your job script:
 
+
 ![syntax](images/syntax.png)
 
-**Job duration requirment**
+
+#### Job Duration Requirment
 
 This specifies how long you expect the program to run. Sensible values are 30 min, 24 hr, 48 hr, or 72 hr. There is litte benefit selecting intermediate values. 
 In some cases, specific time can be extended using the RCS self-service page. If you job is elegible for extension, the option will appear on: https://selfservice.rcs.imperial.ac.uk/jobs.
 If possible, use checkpointing i.e. save intermediate results that can be used to restart your program - so in our case, don't run all programs without any checks, but after each stage have a checkpoint. it is possible to run jobs longer than 72 hr one at a time. 
 
-**Memory requirement**
+
+#### Memory Requirement
 
 When you run a program, the program and data are read into the main memory (RAM). The data is processed in the memory and eventually written out (onto a screen or into a file on the disk). The resouce manager needs an approximate information about how much RAM your program requires. The majority of programs that do not deal with lots of data need no more than 2 GB of RAM. But if your program reads large data files, ask for more memory. If in doubt, start with 2 GB, then the resource will terminate your program and place a message into a log file. In this case, increase the memory requirement and run again. We will probably need more GB - I will add est. once I begin. 
 
-**Number of parallel processes**
+
+#### Number of Parallel Processes
 
 Your program may be capable of parallel execution. If you are not sure, read the manual, ask your colleagues, or check HPC logs that specify how many cores your progam tries to use. Failing in that, visit the RCS clinic. Bear in mind that even if your software runs in parallel, it does not automatically mean that it will run much faster on a given dataset. If you're not sure, benchmark first. 
 
 To submit a script for **threaded** parallel jobs, aka jobs that run on multiple cores on a single node, they require shared memory. In your script, increase the ncpus count, memory (to accomodate more cores) and add ompthreads parameter (ompthreads is always equal or less than ncpus).
 
+
 ![threaded](images/threaded.png)
+
 
 To submit a script for **MPI** jobs, aka jobs that run on muliple cores on multiple nodes, they don't require shared memory. In your script, state the number of nodes using `select`. The rest of the parameters (ncpus, mem, and mpiprocs) state the requirements per one node, again, mpiprocs are always equal (pr less than) ncpus. 
 
+
 ![MPI](images/mpi.png)
 
-**Job sizing**
+
+
+#### Job Sizing
 
 Make sure your job requirement combination fits one of the following classes:
 
+
 ![job size](images/job.png)
+
 
 and also fits into:
 
+
 ![job size 2](images/job2.png)
+
 
 Some jobs will use GPU - not sure if this is relevant to us!
 
+
 ![GPU](images/gpu.png)
-
-
-
 
 
 
