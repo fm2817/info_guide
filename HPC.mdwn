@@ -56,7 +56,7 @@ Next, you will need to register the adaptor with ICT. Use ICT Ask to submit a re
 Once you have access, you can connect to the [research data store](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/rds/) by going to: 
 
 
-`Go > Connect to Server > smb://rds.imperial.ac.uk/RDS/user/yourusername > connect`
+   `Go > Connect to Server > smb://rds.imperial.ac.uk/RDS/user/yourusername > connect`
 
 
 If you still need help, check out [this video](https://vimeo.com/302461588).
@@ -76,19 +76,20 @@ If you are working from home, you will need access to the Imperial Network via V
 
 
 
+
 **You can also use the command line:**
 
 To copy files form the current directory on your machine to your home directory on RDS:
 
-   ```zsh
-   scp file.txt username@login.hpc.ic.ac.uk:~
-   ```
+      ```zsh
+      scp file.txt username@login.hpc.ic.ac.uk:~
+      ```
 
 To copy files from your home directory on RDS to the current directoy on your machine:
 
-   ```zsh
-   scp username@login.hpc.ic.ac.uk:~/file2.txt
-   ```
+      ```zsh
+      scp username@login.hpc.ic.ac.uk:~/file2.txt
+      ```
 
 e.g. `scp/Users/katerina/Desktop/file3.txt  username@login.hpc.ic.ac.uk:/rds/general/user/kmichali/home/projectx`
 
@@ -96,7 +97,9 @@ e.g. `scp/Users/katerina/Desktop/file3.txt  username@login.hpc.ic.ac.uk:/rds/gen
    > Note: for all these options, you need to have VPN connection to the Imperial network. 
 
 
+
 ---
+
 
 
 ## Why use HPC?
@@ -116,6 +119,7 @@ Inside one of these computer racks, are individual computers aka a **node**.
 
 
 
+
 Nodes are made up of multiple **cores** that can access the same memory. A core is the basic computation unit inside a processor that can run a single process. HPC's processors contain up to 14 cores. 
 
 Some other terms to get comfortable with:
@@ -124,6 +128,7 @@ Some other terms to get comfortable with:
    * **Memory** refers to the main memory or RAM - fast memory directly connected to the processor. 
    * **Serial Code** refers to running a program on one core
    * **Parallel Code** referes to running a program on two or more cores. 
+
 
 
 *What can these clusters actually do?* 
@@ -139,15 +144,17 @@ Examples of different types of jobs:
    * Long-running jobs (up to 1000 hr)
 
 
+
 ---
+
 
 
 ## Using the Cluster 
 
 All computers in the HPC resource are connected to one parallel filesystem - [Research Data Store (RDS)](http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/data-management/). When you have an account, you will have access to:
-* your home directory `$HOME` - personal working space; 1 TB allocation (up to 10 mil files)
-* temorpary stoarge `$EPHEMERAL` - addditional individual working space, unlimited allocation, but files are deleted after 30 days
-* allocated project space `$RDS_PROJECT` - your project allocations: `genomics-data`. 
+   * your home directory `$HOME` - personal working space; 1 TB allocation (up to 10 mil files)
+   * temorpary stoarge `$EPHEMERAL` - addditional individual working space, unlimited allocation, but files are deleted after 30 days
+   * allocated project space `$RDS_PROJECT` - your project allocations: `genomics-data`. 
 
 ### Operating in Terminal 
 
@@ -163,6 +170,7 @@ This might take a few minutes to load, especially if you are on VPN. It will the
 
 
 ![HPC environment](images/HPC_environ.png)
+
 
 
 
@@ -319,6 +327,9 @@ Now you are ready to submit your job. First let's check what the job is again ->
 This should print the job script you just wrote. Now let us submit the script using `qsub submit.pbs`. This should give you a job ID, eg. 126610.pbs. 
 
 If you want to check the status of your job, use `qstat` to check IDs for all jobs, or `qstat job_ID` for a specific job ID. Use `ll *job_ID` to check the output of you submit. 
+
+
+---
 
 
 Resource manager commands:
