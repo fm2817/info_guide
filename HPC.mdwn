@@ -28,6 +28,9 @@ This will provide an overview of using the High Performance Computing (HPC) serv
       * [Memory Requirement](#memory-requirement)
       * [Number of Parallel Processes](#number-of-parallel-processes)
       * [Job Sizing](#job-sizing)
+   * [Working Directory for a Job](#working-directory-for-a-job) 
+   * [Using the HPC Resource via RStudio](#using-the-hpc-resource-via-rstudio)
+   * [Troubleshooting yoru Jobs](#troubleshooting-your-jobs)
  * [Globus](#globus)
  * [HPC Courses](#hpc-courses)
  * [Additional Information](#additional-information)
@@ -212,7 +215,7 @@ In Terminal, one you are signed in, use:
 
 This is done only once. Afterwards, using `module load anaconda3/personal` to setup your personal python environment. Anaconda is great because it enables you to create separate package environments for your projects. This helps to avoid version and dependency conflicts. (to actiavte anaconda3/personal you will need to enter `source activate` (or `conda activate` depending on the version), now you will see `(base) -bashxxx`.
 
-      For example, installing `scipy` in a separate environment and some useful commands:
+   For example, installing `scipy` in a separate environment and some useful commands:
 
          ```python
          conda create -n projectx python  #create new environment
@@ -302,10 +305,7 @@ First lets create a test working directory in Terminal. Use `pwd` (aka print wor
 
     `/rds/general/user/your_username/home`. 
 
-In here, lets create the working directory "test" using the command `mkdir test`. Now you need to navigate into that directory, so use `cd test` (aka change directoty to test). If you run `pwd` again, you will see that you are now in:
-
-   `/rds/general/user/your_username/home/test`
-
+In here, lets create the working directory "test" using the command `mkdir test`. Now you need to navigate into that directory, so use `cd test` (aka change directoty to test). If you run `pwd` again, you will see that you are now in `/rds/general/user/your_username/home/test`.
 
 Next, open up Nano (just type in nano and hit enter). You will use nano to write your job script.
 
@@ -329,6 +329,8 @@ This should print the job script you just wrote. Now let us submit the script us
 If you want to check the status of your job, use `qstat` to check IDs for all jobs, or `qstat job_ID` for a specific job ID. Use `ll *job_ID` to check the output of you submit. 
 
 
+A little more info about PBS aka **Poratable Batch System**. This is a system designed to manage the distribution of batch jobs and interactive sessions across the available nodes in the cluster. Below, I've included some basic commands to know. 
+
 ---
 
 
@@ -337,12 +339,16 @@ Resource manager commands:
    * `qstat` or `qstat job_ID` - short overview of your jobs 
    * `qdel job_ID` - to remove a job from the system > Note it takes a few minutes for you to see an update. 
    * `ll *job_ID` - to check the files produced: the top file are any error messages that may have occured; the bottom one is the screen output and resource manager messages. 
+   * `more filename.pbs.oxxxxx` - to view your text file `o` Check that its the file number sarting with o and not e. 
 
 
 The system expects the followng syntax at the ***top*** of your job script:
 
 
 ![syntax](images/syntax.png)
+
+
+You can also ask for resources directly on the command line using qsub -I (capital i). When you get the prompt back, the resource manager will place you on a compute node. You can proceed working directly on the command line (within your resource requirement). eg. `qsub -I -l walltim=00:10:00 -l select=1:ncpus=1:mem=1gb`.
 
 
 #### Job Duration Requirment
@@ -354,14 +360,14 @@ If possible, use checkpointing i.e. save intermediate results that can be used t
 
 #### Memory Requirement
 
-When you run a program, the program and data are read into the main memory (RAM). The data is processed in the memory and eventually written out (onto a screen or into a file on the disk). The resouce manager needs an approximate information about how much RAM your program requires. The majority of programs that do not deal with lots of data need no more than 2 GB of RAM. But if your program reads large data files, ask for more memory. If in doubt, start with 2 GB, then the resource will terminate your program and place a message into a log file. In this case, increase the memory requirement and run again. We will probably need more GB - I will add est. once I begin. 
+When you run a program, the program and data are read into the main memory (RAM). The data is processed in the memory and eventually written out (onto a screen or into a file on the disk). The resouce manager needs an approximate information about how much RAM your program requires. The majority of programs that do not deal with lots of data need no more than 2 GB of RAM. But if your program reads large data files, ask for more memory. If in doubt, start with 2 GB, then the resource will terminate your program and place a message into a log file. In this case, increase the memory requirement and run again. We will probably need more GB - I will add estimate once I begin. 
 
 
 #### Number of Parallel Processes
 
 Your program may be capable of parallel execution. If you are not sure, read the manual, ask your colleagues, or check HPC logs that specify how many cores your progam tries to use. Failing in that, visit the RCS clinic. Bear in mind that even if your software runs in parallel, it does not automatically mean that it will run much faster on a given dataset. If you're not sure, benchmark first. 
 
-To submit a script for **threaded** parallel jobs, aka jobs that run on multiple cores on a single node, they require shared memory. In your script, increase the ncpus count, memory (to accomodate more cores) and add ompthreads parameter (ompthreads is always equal or less than ncpus).
+To submit a script for **OpenMP threaded** parallel jobs, aka jobs that run on multiple cores on a single node, they require shared memory. In your script, increase the ncpus count, memory (to accomodate more cores) and add ompthreads parameter (ompthreads is always equal or less than ncpus).
 
 
 ![threaded](images/threaded.png)
@@ -394,6 +400,214 @@ Some jobs will use GPU - not sure if this is relevant to us!
 ![GPU](images/gpu.png)
 
 
+---
+
+
+### Working Directory for a Job 
+
+When a job starts running, the current working directory changes. It runs in a temporary directory that is created for it ($TMPDIR). This is somewhat counter-intuitive and can lead to file management errors. For example, if you place your input file in the same directory as your job script and expect your program to read it in a current directory, the file will not be found. Here is how we can manage this situation in a couple of different ways.
+
+For example, from the hellohpc example:
+
+!(hellohpc)[images/hellohpc.png]
+
+You can see here that the job submitted by you from `/rdsgpfs/general/user/fm2817/home/intro_hpc_mar16` was executed in `/rds/general/ephemeral/tmpdir/pbs.1266110.pbs`. *The submit and execute directories are different!* **Submit** = your current directory; **execute** = TMP directory!
+
+For example, this job script with input and output files will not work because the default current direcotry for a job is not the same as the directory where the job was sunmitted (and where your input file sits).
+
+      ```
+      #PBS -l walltime=01:00:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load myprog
+
+      myprog input output
+      ```
+
+The input and output will not be found. So to overcome this,you can use an environment variable pointing to your submit directory! This will exist when your job is running, this is where you submitted your job, usually a directory where your job script resides, you can use this variable in your script!
+
+   `$PBS_O_WORKDIR` 
+
+An example job script with $PBS_O_WORKDIR:
+
+      ```
+      #PBS -l walltime=01:00:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load myprog
+
+      myprog $PBS_O_WORKDIR/input $PBS_O_WORKDIR/output
+      ```
+
+You could also use instead as an easy solution. You are changing the wkd before your command
+
+      ```
+      #PBS -l walltime=01:00:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load myprog
+
+      cd $PBS_O_WORKDIR
+      myprog input output
+      ```
+
+---
+
+Example of a python script (using your personal anaconda)
+
+      ```
+      #PBS -l walltime=01:00:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load anaconda3/personal
+      source activate projectx
+
+      cd $PBS_O_WORKDIR
+      python myscript.py
+      ```
+
+Example of an R script (using personal anaconda)
+     
+      ```
+      #PBS -l walltime=01:00:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load anaconda3/personal
+      source activate Renv
+
+      cd $PBS_O_WORKDIR
+      R CMD BATCH myscript.R
+      ```
+
+> Note: $TMPDIR holds a path to the temporary job directory, it is made specifically for your job and deleted when the job is finished. When your jobs starts running, $TMPDIR is your current working directory.
+
+Job script using $TMPDIR
+
+      ```
+      #PBS -l walltime=01:00:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load myprog
+
+      cp $PBS_O_WORKDIR/input $TMPDIR <- copies directory
+
+      myprog input output
+
+      cp output $PBS_O_WORKDIR <- copies directory
+      ```
+
+Resource Manager Parameters
+   * -l select=1:ncpus=1:mem1=gb - specify cpu and memory requirement
+   * -l walltime=HH:MM:00 - specify walltime
+   * -l select=1:ncpus=1:mem=1gb:mpiprocs=1:ompthreads=1 - specification for number of MPI proceesses and/or OpenMP threads
+Optional
+   * -N myjob - gives your job a name
+   * -j oe - merge STDOUT and STDERR logs
+   * o myout - rename STDOUT log
+   * -e myerr - rename STDERR log
+
+
+### Using the HPC Resource via RStudio
+
+Go to [RStudio Imperial](https://rstudio.rcs.ic.ac.uk/auth-sign-in) and sign in. The RStudio interface is just that same as the normal desktop version. You will now see that R has popped up as a folder under home. You can install the packages that you need as normal and during your job script load R instead if you don't want to use anaconda. 
+
+### Troubleshooting your Jobs
+
+ALl standard output (screen and errors - STDOUT `o` and STDERR `e`) from your jobs plus other useful info is written into log files. **Read the log files** carefully even if all seems fine.
+If asking for help, use the [ICT ASK form](https://rstudio.rcs.ic.ac.uk/auth-sign-in) and search for RCS Job Problem. Please provide as much info as possible, for example job id, steps to reproduce the error, your script, the logs (expected and obsreved). 
+
+
+### Parallel computing
+
+Data parallelism (array jopbs) - processing multiple files, processing large files that can be split, simulation repilcates, parameter sweeps. 
+Individual cases have to be independent: they do not exchange data, input for any case doesn't depend on output of the other. 
+
+Advantages: jobs run concurrently, relatively easy to implement, jobs run independently when a resource becomes available; no need to wait until a whole compute node is available (program-level parallel jobs would have to).
+
+To use parallelisation, we use *PBS Job Arrays* to allow a large collection of PBS runs to be executed in one script. These job arrays can significantly relieve the strain on the PBS queuing system. They also allow a much easier metho to run a large amount of jobs that only vary by one or two parameters. Implementing PBS Job Arrays into your PBS script is very easy. 
+
+Single job before parallelisation:
+
+      ```
+      #PBS -l walltime=00:10:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      module load myprog
+
+      myprog input output
+      ```
+
+Parallelisation - array job script. The inclusion of `#PBS -J n-m:step`, where n is the starting index, m is the ending index, and the optional step is the step size, will state to PBS that this pBS script is a job array. The environment variable `$PBS_ARRAY_INDEX` will output the current job index in which the script is executing. When you submit a job array, the PBS job number will have brackets [] appended to it, so if a normal job looks something like "123456", it would now look like "123456[]" in the PBS qstat command. For example, using the directive `#PBS -J 1-999:2` into your PBS script will cause PBS to runn 500 instances of your script. Each instance of your script will ahve a `$PBS_ARRAY_INDEX` uniquely set to one of 1, 3, 5, 7,..., 999 when it is executed. 
+
+      ```
+      #PBS -l walltime=00:10:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+      #PBS -J n-m:step 
+
+      module load myprog
+
+      myprog input output
+      ```
+
+**Numbered files:** This is useful for example, when you want to run a program on a file but the file is too big. So you can split the file into smaller chunks and process them concurrently.
+To split a file, use `split -n number_of_smaller_files -a 1 --numeric-suffixes=1 file_name new_file_name`. 
+
+![array split](images/array_split.png)
+      
+so, lets use the example `infile`. Before splitting, we would have had to use:
+
+      ```
+      #PBS -l walltime=00:10:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+      #PBS -N class
+
+      cd $PBS_O_WORKDIR
+      ./script infile outfile 
+      ```
+
+But, after splitting, now we use:
+      
+      ```
+      #PBS -l walltime=00:10:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+      #PBS -J 1-3
+
+      cd $PBS_O_WORKDIR
+      ./filter.py infile.$PBS_ARRAY_INDEX outfile.$PBS_ARRAY_INDEX 
+      ```
+
+Here, you include `.PBS_ARRAY_INDEX` after the file name; this takes calues from 1 to 3 (or any other value specified by -J).
+
+**File List:** In another scenario, you have a list of molecule data and you want to run `stats.py` on each molecule. But there are too many molecules and it would take a long time. The solution: you can process the moelcules concurrently!
+
+Before parallelisation, you would have had to apply a script to each molecule:
+
+      ```
+      #PBS -l walltime=00:10:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+
+      cd $PBS_O_WORKDIR
+
+      INFILE=cubane.pdb
+
+      ./stats.py $INFILE ${INFILE}.out 
+      ```
+
+But, if we aopply a file list:
+
+      ```
+      #PBS -l walltime=00:10:00
+      #PBS -l select=1:ncpus=1:mem=1gb
+      #PBS -J 1-6 <- adding the number list here
+
+      cd $PBS_O_WORKDIR 
+
+      INFILE=$(head -n $PBS_ARRAY_INDEX list | tail -n 1) 
+
+      ./stats.py $INFILE ${INFILE}.out 
+      ```
+
+**Loops and matrices:** In a third scenario, if you are running simulation replicates or parameter sweep, your program might contain a very time-consuming for loop. If the loop iterations are independent, there is a good change that you can deploy it as an array run. The following Python ecample uses $PBS_ARRAY_INDEX value directly in the Python code. The code iterates through a matrix and uses individual elements for a calculation. In the original code, the calculations happen in a serial manner. 
 
 ## Globus
 
@@ -424,6 +638,7 @@ Who to contact?
 * Getting started - http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/
 * Weekly drop-in clinincs: http://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/attend-a-clinic/
 * Service status - https://selfservice.rcs.imperial.ac.uk/saml/acs/
-* Self-service selfservice.rcs.imperial.ac.uk (group management, hob monitoring and extensions, etc.)
+* Self-service selfservice.rcs.imperial.ac.uk (group management, job monitoring and extensions, etc.)
+* status of all active jobs: https://selfservice.rcs.imperial.ac.uk/jobs/qstat 
 
 > Note: drop-in clinics are planned to open at Hammersmith twice a month soon. 
