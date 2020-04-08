@@ -336,7 +336,7 @@ A little more info about PBS aka **Poratable Batch System**. This is a system de
 
 
 Resource manager commands:
-   * `qsub your_script` - submit your job and system returns a jobid
+   * `qsub your_script` - submit your job and system returns a job id
    * `qstat` or `qstat job_ID` - short overview of your jobs 
    * `qdel job_ID` - to remove a job from the system > Note it takes a few minutes for you to see an update. 
    * `ll *job_ID` - to check the files produced: the top file are any error messages that may have occured; the bottom one is the screen output and resource manager messages. 
@@ -594,7 +594,7 @@ Before parallelisation, you would have had to apply a script to each molecule:
       ./stats.py $INFILE ${INFILE}.out 
       ```
 
-But, if we aopply a file list:
+But, if we apply a file list:
 
       ```
       #PBS -l walltime=00:10:00
